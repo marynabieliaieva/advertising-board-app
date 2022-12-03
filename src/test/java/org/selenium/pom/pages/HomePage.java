@@ -5,9 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.selenium.pom.base.BasePage;
 
 public class HomePage extends BasePage {
-    private final By userNameField = By.xpath("//div[@class='auth-block-right-box']//input[@placeholder='Email']");
-    private final By passwordField = By.xpath("//div[@class='auth-block-right-box']//input[@placeholder='Password']");
-    private final By submitButton = By.xpath("(//button[contains(@class, 'color-green auth-reg-send')])[1]");
+    private final By selectLanguageIcon = By.xpath("(//span[@class='toolbar-dropdown-image-circle'])[1]");
+    private final By englishLanguageIcon = By.xpath("(//*[@class='dropdown-box-list-link dropdown-lang-list']//*[text()='English'])[2]");
+    private final By loginButton = By.xpath("(//*[@class='las la-sign-in-alt'])[2]");
+    private final By titleText = By.xpath("(//*[contains(@class, 'user-title')])");
+    private final By createAdButton = By.xpath("//a[@class='header-wow-sticky-add btn-color-light']");
 
 
     public HomePage(WebDriver driver) {
@@ -15,24 +17,24 @@ public class HomePage extends BasePage {
     }
 
     public void clickSelectLanguage(){
-        driver.findElement(userNameField).sendKeys();
+        driver.findElement(selectLanguageIcon).sendKeys();
     }
 
     public void clickEnglishLanguage(){
-        driver.findElement(passwordField).sendKeys();
+        driver.findElement(englishLanguageIcon).sendKeys();
     }
 
     public LoginPage clickLoginButton(){
-        driver.findElement(submitButton).click();
+        driver.findElement(loginButton).click();
         return new LoginPage(driver);
     }
 
     public String getTitle(){
-        return driver.findElement(submitButton).click();
+        return driver.findElement(titleText).getText();
     }
 
     public CreateAdPage clickCreateAdButton(){
-        driver.findElement(submitButton).click();
+        driver.findElement(createAdButton).click();
         return new CreateAdPage(driver);
     }
 
