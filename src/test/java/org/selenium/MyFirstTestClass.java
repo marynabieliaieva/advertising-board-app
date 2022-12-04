@@ -37,6 +37,6 @@ public class MyFirstTestClass extends BaseTest {
         Thread.sleep(5000);
         createAdPage.submitAdd();
         createAdPage.filledOutPredefinedValuesFields();
-        Thread.sleep(105000);
+        Thread.sleep(5000);
     }
 }

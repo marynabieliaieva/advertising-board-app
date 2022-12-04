@@ -3,6 +3,7 @@ package org.selenium.pom.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.selenium.pom.base.BasePage;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class CreateAdPage extends BasePage {
     private final By uploadImageButton = By.xpath("//button[@class='dz-button']");
     private final By descriptionTextField = By.xpath("//*[@class='ads-create-textarea']");
     private final By selectBoxes = By.xpath("//*[@data-name='Not chosen']");
-    private final By predefinedValuesFields = By.xpath("//*[@class='form-control']");
+    private final By predefinedValuesFields = By.xpath("//input[@class='form-control' and @type='number']");
     private final By publishAdButton = By.xpath("//button[@class='ads-create-publish btn-color-blue']");
 
     public CreateAdPage(WebDriver driver) {
@@ -75,12 +76,17 @@ public class CreateAdPage extends BasePage {
         return this;
     }
 
-    public CreateAdPage filledOutPredefinedValuesFields(){
+    public void filledOutPredefinedValuesFields() throws InterruptedException {
         List<WebElement> predefinedFieldsList = getPredefinedFieldsList();
-        for(int i = 0; i > predefinedFieldsList.size(); i++) {
-            predefinedFieldsList.get(i).sendKeys("1");
+        for(int i = 1; i < predefinedFieldsList.size()+1; i++) {
+            By locator = By.xpath("(//input[@class='form-control' and @type='number'])["+i+"]");
+            System.out.println(locator);
+            new Actions(driver).moveToElement(driver.findElement(locator)).click().build().perform();
+            new Actions(driver).moveToElement(driver.findElement(locator)).sendKeys("1").build().perform();
+            //driver.findElement(By.xpath("(//input[@class='form-control' and @type='number'])["+i+"]")).click();
+            //driver.findElement(By.xpath("//input[@class='form-control']["+i+"]")).sendKeys("1");
+            Thread.sleep(5000);
         }
-        return this;
     }
 
     public CreateAdPage submitAdd(){
