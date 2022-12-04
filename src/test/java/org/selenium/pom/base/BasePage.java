@@ -9,4 +9,8 @@ public class BasePage {
         this.driver = driver;
     }
 
+    public void load(String endPoint){
+        driver.get("https://advertising-board.app" + endPoint);
+    }
+
 }

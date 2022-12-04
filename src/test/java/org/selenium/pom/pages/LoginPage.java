@@ -14,17 +14,27 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    public void putUserName(String userName){
+    public LoginPage putUserName(String userName){
+        driver.findElement(userNameField).clear();
         driver.findElement(userNameField).sendKeys(userName);
+        return this;
     }
 
-    public void putPassword(String password){
+    public LoginPage putPassword(String password){
+        driver.findElement(passwordField).clear();
         driver.findElement(passwordField).sendKeys(password);
+        return this;
     }
 
-    public HomePage login(){
+    public LoginPage clickLoginButton(){
         driver.findElement(submitButton).click();
-        return new HomePage(driver);
+        return this;
+    }
+
+    public LoginPage login(String userName, String password){
+        return putUserName(userName)
+                .putPassword(password)
+                .clickLoginButton();
     }
 
 }

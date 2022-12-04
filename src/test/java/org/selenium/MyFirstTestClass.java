@@ -8,22 +8,35 @@ import org.selenium.pom.pages.LoginPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class MyFirstTestClass extends BaseTest {
     @Test
     public void dummyTest() throws InterruptedException {
         driver.get("https://advertising-board.app/");
-        HomePage homePage = new HomePage(driver);
-        homePage.clickSelectLanguage();
-        homePage.clickEnglishLanguage();
-        LoginPage loginPage= homePage.clickLoginButton();
-        loginPage.putUserName("marynelko@gmail.com");
-        loginPage.putPassword("a2gPcEsCls");
-        loginPage.login();
-
+        HomePage homePage = new HomePage(driver)
+                .load()
+                .clickSelectLanguageButton()
+                .selectLanguage("English");
+        LoginPage loginPage=homePage.clickLoginButton();
+        loginPage.login("marynelko@gmail.com", "a2gPcEsCls");
         Thread.sleep(5000);
         Assert.assertEquals(homePage.getTitle(), "My ads");
-
         CreateAdPage createAdPage = homePage.clickCreateAdButton();
-
+        List<String> list = createAdPage.getCategoryNames();
+        Thread.sleep(5000);
+        List<String> categoryNames = createAdPage.getCategoryNames();
+        String categoryName = createAdPage.selectElement(categoryNames);
+        By categoryOnPage = createAdPage.getCategoryOnPage(categoryName);
+        createAdPage.selectCategory(categoryOnPage);
+        Thread.sleep(5000);
+        List<String> subCategoryNames = createAdPage.getSubCategoryNames();
+        String subCategoryName = createAdPage.selectElement(subCategoryNames);
+        By subCategoryOnPage = createAdPage.getSubCategoryOnPage(subCategoryName);
+        createAdPage.selectCategory(subCategoryOnPage);
+        Thread.sleep(5000);
+        createAdPage.submitAdd();
+        createAdPage.filledOutPredefinedValuesFields();
+        Thread.sleep(105000);
     }
 }
