@@ -2,6 +2,7 @@ package org.selenium;
 
 import org.openqa.selenium.By;
 import org.selenium.pom.base.BaseTest;
+import org.selenium.pom.objects.AdData;
 import org.selenium.pom.pages.CreateAdPage;
 import org.selenium.pom.pages.HomePage;
 import org.selenium.pom.pages.LoginPage;
@@ -13,6 +14,11 @@ import java.util.List;
 public class MyFirstTestClass extends BaseTest {
     @Test
     public void dummyTest() throws InterruptedException {
+        AdData adData = new AdData();
+        adData.setCity("Киев");
+        adData.setDescription("Description");
+        adData.setPrice("10000");
+        adData.setAddress("Zaluzhny str. 1");
         driver.get("https://advertising-board.app/");
         HomePage homePage = new HomePage(driver)
                 .load()
@@ -36,7 +42,7 @@ public class MyFirstTestClass extends BaseTest {
         createAdPage.selectCategory(subCategoryOnPage);
         Thread.sleep(5000);
         createAdPage.submitAdd();
-        createAdPage.filledOutPredefinedValuesFields();
-        Thread.sleep(5000);
+        createAdPage.fillOutRequiredFields(adData);
+        createAdPage.submitAdd();
     }
 }
