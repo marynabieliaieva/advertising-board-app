@@ -33,7 +33,11 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.ainrif.apiator</groupId>
+            <artifactId>jakson-plugin-core-json-renderer</artifactId>
+            <version>0.15.1</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -1,13 +1,15 @@
 package org.selenium.pom.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.selenium.pom.base.BasePage;
 import org.selenium.pom.objects.AdData;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class CreateAdPage extends BasePage {
     private final By priceTextField = By.xpath("//input[@name='price']");
     private final By addressTextField = By.xpath("//input[@id='searchMapAddress']");
     private final By photoUpload = By.xpath("//input[@type='file']");
+    private final By cookiesCloseButton = By.xpath("//div[@class='block-cookies']/span[@class='btn-custom btn-color-blue']");
+    private final By publishAdButtonClicked = By.xpath("//button[@class='ads-create-publish btn-color-blue']/span[@style='display: none;']");
 
 
     public CreateAdPage(WebDriver driver) {
@@ -49,7 +53,6 @@ public class CreateAdPage extends BasePage {
         for(WebElement element : categoryNamesList) {
             String categoryName = element.getText();
             categoryNames.add(categoryName);
-            System.out.println(categoryName);
         }
         return categoryNames;
     }
@@ -60,7 +63,6 @@ public class CreateAdPage extends BasePage {
         for(WebElement element : categoryNamesList) {
             String categoryName = element.getText();
             subCategoryNames.add(categoryName);
-            System.out.println(categoryName);
         }
         return subCategoryNames;
     }
@@ -79,51 +81,59 @@ public class CreateAdPage extends BasePage {
 
     public CreateAdPage selectCategory(By categoryOnPage){
         driver.findElement(categoryOnPage).click();
+        System.out.println("Category selected");
         return this;
     }
 
-    public CreateAdPage fillOutPredefinedValuesFields() throws InterruptedException {
+    public CreateAdPage fillOutPredefinedValuesFields(){
         List<WebElement> predefinedFieldsList = getPredefinedFieldsList();
         for(int i = 1; i < predefinedFieldsList.size()+1; i++) {
             By locator = By.xpath("(//input[@class='form-control' and @type='number'])["+i+"]");
-            System.out.println(locator);
             new Actions(driver).moveToElement(driver.findElement(locator)).click().build().perform();
             new Actions(driver).moveToElement(driver.findElement(locator)).sendKeys("1").build().perform();
-            Thread.sleep(5000);
         }
         return this;
     }
 
     public CreateAdPage submitAdd(){
-        driver.findElement(publishAdButton).click();
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(publishAdButton));
+        new Actions(driver).moveToElement(driver.findElement(publishAdButton)).click().build().perform();
+        wait.until(ExpectedConditions.elementToBeClickable(publishAdButtonClicked));
+        System.out.println("Submit Ad clicked");
         return this;
     }
 
     public CreateAdPage fillOutDescription(String description){
         driver.findElement(descriptionTextField).sendKeys(description);
+        System.out.println("Description filled out.");
         return this;
     }
 
-    public CreateAdPage fillOutCity(String city) throws InterruptedException {
+    public CreateAdPage fillOutCity(String city){
         driver.findElement(cityTextField).sendKeys(city);
-        Thread.sleep(3000);
         driver.findElement(By.xpath("//div[@class='custom-results SearchCityResults SearchCityOptions']/div[@class='item-city' and @data-city='"+city+"']")).click();
+        System.out.println("City filled out.");
         return this;
     }
 
-    public CreateAdPage fillOutSelectBoxes() throws InterruptedException {
+    public CreateAdPage fillOutSelectBoxes(){
         List<WebElement> selectBoxElements = getSelectBoxes();
         for(int i = 1; i < selectBoxElements.size()+1; i++) {
             By selectBox = By.xpath("(//*[@data-name='Not chosen'])["+i+"]");
             By selectBoxOption = By.xpath("(//*[@data-name='Not chosen']/following-sibling::*/label[2])["+i+"]");
+            System.out.println("Trying to wait select boxes");
+            new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.presenceOfElementLocated(selectBox));
+            new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.elementToBeClickable(selectBox));
+            System.out.println("Looks like the select box is here but can't click.");
             new Actions(driver).moveToElement(driver.findElement(selectBox)).click().build().perform();
             new Actions(driver).moveToElement(driver.findElement(selectBoxOption)).click().build().perform();
-            Thread.sleep(5000);
         }
         return this;
     }
 
     private List<WebElement> getSelectBoxes() {
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.presenceOfElementLocated(selectBoxes));
         List<WebElement> selectBoxElements = driver.findElements(selectBoxes);
         return selectBoxElements;
     }
@@ -144,7 +154,7 @@ public class CreateAdPage extends BasePage {
         return this;
     }
 
-    public CreateAdPage fillOutRequiredFields(AdData adData) throws InterruptedException {
+    public CreateAdPage fillOutRequiredFields(AdData adData){
         return  UploadFile().
                 fillOutDescription(adData.getDescription()).
                 fillOutPrice(adData.getPrice()).
@@ -152,5 +162,10 @@ public class CreateAdPage extends BasePage {
                 fillOutPredefinedValuesFields().
                 fillOutCity(adData.getCity()).
                 fillOutAddress(adData.getAddress());
+    }
+
+    public CreateAdPage closeCookiesMessage(){
+        driver.findElement(cookiesCloseButton).click();
+        return this;
     }
 }

@@ -9,7 +9,6 @@ public class LoginPage extends BasePage {
     private final By passwordField = By.xpath("//div[@class='auth-block-right-box']//input[@placeholder='Password']");
     private final By submitButton = By.xpath("(//button[contains(@class, 'color-green auth-reg-send')])[1]");
 
-
     public LoginPage(WebDriver driver) {
         super(driver);
     }

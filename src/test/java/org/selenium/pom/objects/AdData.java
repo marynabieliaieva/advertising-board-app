@@ -6,37 +6,48 @@ public class AdData {
     private String address;
     private String price;
 
+    public AdData(){}
+
+    public AdData(String description, String city, String address, String price){
+        this.description = description;
+        this.city = city;
+        this.address = address;
+        this.price = price;
+    }
+
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public AdData setAddress(String address) {
         this.address = address;
+        return this;
     }
 
     public String getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public AdData setPrice(String price) {
         this.price = price;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public AdData setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public AdData setCity(String city) {
         this.city = city;
+        return this;
     }
-
-
 }
