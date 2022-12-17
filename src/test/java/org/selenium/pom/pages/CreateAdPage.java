@@ -81,7 +81,6 @@ public class CreateAdPage extends BasePage {
 
     public CreateAdPage selectCategory(By categoryOnPage){
         driver.findElement(categoryOnPage).click();
-        System.out.println("Category selected");
         return this;
     }
 
@@ -95,25 +94,24 @@ public class CreateAdPage extends BasePage {
         return this;
     }
 
-    public CreateAdPage submitAdd(){
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeClickable(publishAdButton));
+    public CreateAdPage submitAdd() throws InterruptedException {
+        Thread.sleep(5000);
+        wait.until(ExpectedConditions.elementToBeClickable(publishAdButton)).click();
+        //WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        //wait.until(ExpectedConditions.elementToBeClickable(publishAdButton));
         new Actions(driver).moveToElement(driver.findElement(publishAdButton)).click().build().perform();
-        wait.until(ExpectedConditions.elementToBeClickable(publishAdButtonClicked));
-        System.out.println("Submit Ad clicked");
+        //wait.until(ExpectedConditions.elementToBeClickable(publishAdButtonClicked));
         return this;
     }
 
     public CreateAdPage fillOutDescription(String description){
         driver.findElement(descriptionTextField).sendKeys(description);
-        System.out.println("Description filled out.");
         return this;
     }
 
     public CreateAdPage fillOutCity(String city){
         driver.findElement(cityTextField).sendKeys(city);
         driver.findElement(By.xpath("//div[@class='custom-results SearchCityResults SearchCityOptions']/div[@class='item-city' and @data-city='"+city+"']")).click();
-        System.out.println("City filled out.");
         return this;
     }
 
@@ -122,10 +120,8 @@ public class CreateAdPage extends BasePage {
         for(int i = 1; i < selectBoxElements.size()+1; i++) {
             By selectBox = By.xpath("(//*[@data-name='Not chosen'])["+i+"]");
             By selectBoxOption = By.xpath("(//*[@data-name='Not chosen']/following-sibling::*/label[2])["+i+"]");
-            System.out.println("Trying to wait select boxes");
             new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.presenceOfElementLocated(selectBox));
             new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.elementToBeClickable(selectBox));
-            System.out.println("Looks like the select box is here but can't click.");
             new Actions(driver).moveToElement(driver.findElement(selectBox)).click().build().perform();
             new Actions(driver).moveToElement(driver.findElement(selectBoxOption)).click().build().perform();
         }
@@ -168,4 +164,5 @@ public class CreateAdPage extends BasePage {
         driver.findElement(cookiesCloseButton).click();
         return this;
     }
+
 }
