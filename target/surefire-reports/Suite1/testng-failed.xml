@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite thread-count="4" parallel="tests" name="Failed suite [Suite1]" guice-stage="DEVELOPMENT" verbose="0">
+  <test thread-count="4" parallel="methods" name="FIREFOX(failed)" verbose="0">
+    <parameter name="browser" value="FIREFOX"/>
+    <classes>
+      <class name="app.advertising_board.pom.tests.CreateAddTest">
+        <methods>
+          <include name="quitDriver"/>
+          <include name="startDriver"/>
+          <include name="createAddTest"/>
+        </methods>
+      </class> <!-- app.advertising_board.pom.tests.CreateAddTest -->
+    </classes>
+  </test> <!-- FIREFOX(failed) -->
+  <test thread-count="4" parallel="methods" name="CHROME(failed)" verbose="0">
+    <parameter name="browser" value="CHROME"/>
+    <classes>
+      <class name="app.advertising_board.pom.tests.CreateAddTest">
+        <methods>
+          <include name="quitDriver"/>
+          <include name="startDriver"/>
+          <include name="createAddTest"/>
+        </methods>
+      </class> <!-- app.advertising_board.pom.tests.CreateAddTest -->
+    </classes>
+  </test> <!-- CHROME(failed) -->
+</suite> <!-- Failed suite [Suite1] -->

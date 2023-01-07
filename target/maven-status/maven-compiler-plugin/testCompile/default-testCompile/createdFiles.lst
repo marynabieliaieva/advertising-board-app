@@ -1,0 +1,13 @@
+app\advertising_board\pom\factory\DriverManager$1.class
+app\advertising_board\pom\pages\HomePage.class
+app\advertising_board\pom\constants\DriverType.class
+app\advertising_board\pom\pages\LoginPage.class
+app\advertising_board\pom\pages\AdPage.class
+app\advertising_board\pom\objects\Credentials.class
+app\advertising_board\pom\factory\DriverManager.class
+app\advertising_board\pom\tests\CreateAddTest.class
+app\advertising_board\pom\base\BaseTest.class
+app\advertising_board\pom\objects\AdData.class
+app\advertising_board\pom\utils\JacksonUtils.class
+app\advertising_board\pom\base\BasePage.class
+app\advertising_board\pom\pages\CreateAdPage.class
