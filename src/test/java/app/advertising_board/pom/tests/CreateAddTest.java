@@ -3,6 +3,7 @@ package app.advertising_board.pom.tests;
 import app.advertising_board.pom.objects.Credentials;
 import app.advertising_board.pom.pages.HomePage;
 import app.advertising_board.pom.pages.LoginPage;
+import app.advertising_board.pom.utils.ConfigLoader;
 import org.openqa.selenium.By;
 import app.advertising_board.pom.base.BaseTest;
 import app.advertising_board.pom.objects.AdData;
@@ -20,7 +21,7 @@ public class CreateAddTest extends BaseTest {
     public void createAddTest() throws IOException, InterruptedException {
         AdData adData = JacksonUtils.deserializeJson("adData.json", AdData.class);
         Credentials credentials = new Credentials("user");
-        getDriver().get("https://advertising-board.app/");
+        getDriver().get(ConfigLoader.getConfigLoader().getBaseUrl());
         HomePage homePage = new HomePage(getDriver())
                 .load()
                 .clickSelectLanguageButton()
@@ -51,7 +52,7 @@ public class CreateAddTest extends BaseTest {
     public void createAddTest1() throws IOException {
         AdData adData = JacksonUtils.deserializeJson("adData.json", AdData.class);
         Credentials credentials = new Credentials("admin");
-        getDriver().get("https://advertising-board.app/");
+        getDriver().get(ConfigLoader.getConfigLoader().getBaseUrl());
         HomePage homePage = new HomePage(getDriver())
                 .load()
                 .clickSelectLanguageButton()

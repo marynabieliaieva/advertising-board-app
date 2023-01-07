@@ -1,5 +1,6 @@
 package app.advertising_board.pom.base;
 
+import app.advertising_board.pom.utils.ConfigLoader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -17,7 +18,7 @@ public class BasePage {
     }
 
     public void load(String endPoint){
-        driver.get("https://advertising-board.app" + endPoint);
+        driver.get(ConfigLoader.getConfigLoader().getBaseUrl() + endPoint);
     }
 
 
